@@ -23,6 +23,30 @@ function Signupform() {
         });
         setError(null);
     }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+        try {
+            const response = await fetch("http://localhost:5007/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+            if (!response.ok) {
+                throw new Error("Signup failed");
+            }
+            const data = await response.json();
+            console.log("Signup successful:", data);
+            resetForm();
+        } catch (error) {
+            setError(error.message);
+        }
+    }
     return (
         <div className="signup-form">
             <h2>Sign Up</h2>
@@ -55,16 +79,7 @@ function Signupform() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                 />
-                <button type="submit" onClick={(e) => {
-                    e.preventDefault();
-                    if (formData.password !== formData.confirmPassword) {
-                        setError("Passwords do not match");
-                    } else {
-                        // Handle signup logic here
-                        console.log("Form submitted", formData);
-                        resetForm();
-                    }
-                }}>Sign Up</button>
+                <button type="submit" onClick={handleSubmit}>Sign Up</button>
             </form>
             </div>
             )

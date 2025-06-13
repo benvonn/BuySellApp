@@ -4,7 +4,7 @@ function SellForm() {
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
         itemName: "",
-        quantity: "",
+        itemDesc: "",
         price: "",
         sellerName: ""
     });
@@ -19,7 +19,7 @@ function SellForm() {
     const resetForm = () => {
         setFormData({
             itemName: "",
-            quantity: "",
+            itemDesc: "",
             price: "",
             sellerName: ""
         });
@@ -39,9 +39,10 @@ function SellForm() {
                 />
                 <input
                     type="number"
-                    name="quantity"
-                    placeholder="Quantity"
-                    value={formData.quantity}
+                    name="itemDesc"
+                    placeholder="Description(Max 250 characters)"
+                    maxLength={250}
+                    value={formData.itemDesc}
                     onChange={handleChange}
                 />
                 <input

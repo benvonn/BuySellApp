@@ -1,6 +1,6 @@
-import SellForm from "./contentForms/Sell";
+import SellForm from "../SellForms/Sell";
 import React, { useState, useEffect } from "react";
-import BuyList from "./Buy/BuyList";
+import BuyList from "../itemList/BuyList";
 
 function MainContent() {
     const [viewMode, setViewMode] = useState('buy');

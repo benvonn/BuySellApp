@@ -27,7 +27,6 @@ function BuyList() {
                     <li key={index}>
                         <h3>{item.itemName}</h3>
                         <p>Price: ${item.price}</p>
-                        <p>Seller: {item.sellerName}</p>
                     </li>
                 ))}
             </ul>
