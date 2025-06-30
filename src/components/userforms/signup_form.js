@@ -1,12 +1,13 @@
 import React from "react";
 
-function Signupform() {
+function Signupform({ setUserData }) {
     const [error, setError] = React.useState(null);
     const [formData, setFormData] = React.useState({
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        PreferredContact: "None"
     });
     const handleChange = (e) => {
         setFormData({
@@ -30,7 +31,7 @@ function Signupform() {
             return;
         }
         try {
-            const response = await fetch("http://localhost:5007/register", {
+            const response = await fetch("http://localhost:5069/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -55,6 +56,7 @@ function Signupform() {
                     type="text"
                     name="username"
                     placeholder="Username"
+                    required
                     value={formData.username}
                     onChange={handleChange}
                 />
@@ -62,6 +64,7 @@ function Signupform() {
                     type="email"
                     name="email"
                     placeholder="Email"
+                    required
                     value={formData.email}
                     onChange={handleChange}
                 />
@@ -69,6 +72,7 @@ function Signupform() {
                     type="password"
                     name="password"
                     placeholder="Password"
+                    required
                     value={formData.password}
                     onChange={handleChange}
                 />
@@ -76,8 +80,17 @@ function Signupform() {
                     type="password"
                     name="confirmPassword"
                     placeholder="Confirm Password"
+                    required
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                />
+                <input 
+                    type="text"
+                    name="PreferredContact"
+                    placeholder="Preferred Contact Method"
+                    value={formData.PreferredContact}
+                    onChange={handleChange}
+                    style={{display: "none"}}
                 />
                 <button type="submit" onClick={handleSubmit}>Sign Up</button>
             </form>

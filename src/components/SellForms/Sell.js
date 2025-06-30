@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function SellForm() { 
+function SellForm() {
     const [error, setError] = useState(null);
+    const [successMsg, setSuccessMsg] = useState(null);
     const [formData, setFormData] = useState({
         itemName: "",
-        itemDesc: "",
+        description: "",
+        priceOption: "set",   // "set" or "negotiable"
         price: "",
-        sellerName: ""
+        userId: "",
     });
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            setFormData(prev => ({ ...prev, userId: Number(user.id) }));
+        }
+    }, []);
 
     const handleChange = (e) => {
         setFormData({
@@ -16,20 +26,56 @@ function SellForm() {
         });
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const finalPrice = formData.priceOption === "negotiable" ? "Negotiable" : formData.price;
+
+        if (!formData.itemName || !formData.description || !finalPrice) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
+        try {
+            const res = await fetch("http://localhost:5069/items/selling/details", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    itemName: formData.itemName,
+                    description: formData.description,
+                    price: finalPrice,
+                    userId: formData.userId
+                })
+            });
+
+            if (!res.ok) throw new Error("Failed to submit item.", console.log(res));
+
+            setSuccessMsg("Item listed successfully!");
+            resetForm();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
     const resetForm = () => {
         setFormData({
             itemName: "",
-            itemDesc: "",
+            description: "",
+            priceOption: "set",
             price: "",
-            sellerName: ""
+            userId: formData.userId
         });
         setError(null);
+        setSuccessMsg(null);
     };
 
     return (
         <div className="sell-form">
             <h2>Sell Item</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     name="itemName"
@@ -37,36 +83,36 @@ function SellForm() {
                     value={formData.itemName}
                     onChange={handleChange}
                 />
-                <input
-                    type="number"
-                    name="itemDesc"
-                    placeholder="Description(Max 250 characters)"
+                <textarea
+                    name="description"
+                    placeholder="Description (Max 250 characters)"
                     maxLength={250}
-                    value={formData.itemDesc}
+                    value={formData.description}
                     onChange={handleChange}
                 />
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={formData.price}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    name="sellerName"
-                    placeholder="Your Name"
-                    value={formData.sellerName}
-                    onChange={handleChange}
-                />
-                <button type="submit" onClick={(e) => {
-                    e.preventDefault();
-                    // Add form submission logic here
-                }}>Sell</button>
+                <label>Price Option:</label>
+                <select name="priceOption" value={formData.priceOption} onChange={handleChange}>
+                    <option value="set">Set Price</option>
+                    <option value="negotiable">Negotiable</option>
+                </select>
+
+                {formData.priceOption === "set" && (
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Enter price"
+                        value={formData.price}
+                        onChange={handleChange}
+                    />
+                )}
+
+                <button type="submit">Sell</button>
             </form>
             {error && <p className="error">{error}</p>}
+            {successMsg && <p className="success">{successMsg}</p>}
             <button onClick={resetForm}>Reset</button>
         </div>
     );
 }
+
 export default SellForm;

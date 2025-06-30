@@ -1,0 +1,61 @@
+.sell-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sell-form h2 {
+  margin-top: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.sell-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sell-form input,
+.sell-form textarea,
+.sell-form select {
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f9f9f9;
+}
+
+.sell-form textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.sell-form button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sell-form button:hover {
+  background-color: #0056b3;
+}
+
+.sell-form .error {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+.sell-form .success {
+  color: green;
+  margin-top: 0.5rem;
+}

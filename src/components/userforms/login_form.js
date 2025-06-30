@@ -1,23 +1,22 @@
 import React from "react";
 
-function Login() {
+function Login({ setUserData, closePopup }) {
     const [formData, setFormData] = React.useState({
         username: "",
         password: "",
     });
-    const [userData, setUserData] = React.useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await fetch("http://localhost:5007/login", {
+        const res = await fetch("http://localhost:5069/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             credentials: "include",
             body: JSON.stringify({
-                username: formData.username,
-                password: formData.password,
+                Username: formData.username,
+                Password: formData.password,
             }),
         });
         
@@ -30,14 +29,16 @@ function Login() {
             const userId = loginData.userId;
 
             console.log("Login Successful", userId);
-            const userRes = await fetch(`http://localhost:5007/user/${formData.username}`, {
+            const userRes = await fetch(`http://localhost:5069/login/user/${formData.username}`, {
                 method: "GET",
                 credentials: "include",
             }
             );
             if (userRes.ok) {
                 const data = await userRes.json();
+                localStorage.setItem("user", JSON.stringify(data));
                 setUserData(data);
+                closePopup();
                 console.log("User Data:", data);
             } else {
                 console.log("Failed to fetch user data");

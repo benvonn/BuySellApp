@@ -1,0 +1,83 @@
+.user-owned-items {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.user-owned-items h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.user-owned-items ol {
+    list-style: none;
+    padding: 0;
+}
+
+.user-owned-items li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.user-owned-items li:hover {
+    background-color: #f0f0f0;
+}
+
+.user-owned-items li.sold {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.user-owned-items h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.user-owned-items p {
+    margin: 5px 0 10px 0;
+    color: #555;
+}
+
+.user-owned-items button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-owned-items button:disabled {
+    background-color: #aaa;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.user-owned-items button:not(:disabled):first-of-type {
+    background-color: #007bff;
+    color: white;
+}
+
+.user-owned-items button:not(:disabled):first-of-type:hover {
+    background-color: #0056b3;
+}
+
+.user-owned-items button:not(:disabled):last-of-type {
+    background-color: #dc3545;
+    color: white;
+}
+
+.user-owned-items button:not(:disabled):last-of-type:hover {
+    background-color: #c82333;
+}
