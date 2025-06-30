@@ -5,9 +5,11 @@ function Login({ setUserData, closePopup }) {
         username: "",
         password: "",
     });
+    const [error, setError] = React.useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError("");
         const res = await fetch("http://localhost:5069/login", {
             method: "POST",
             headers: {
@@ -22,6 +24,8 @@ function Login({ setUserData, closePopup }) {
         
 
         if (!res.ok) {
+            const msg = await res.text();
+            setError(msg || "Login Failed. Please check your credentials.");
             console.log("Login Failed");
         } else {
             const loginData = await res.json();
@@ -41,6 +45,7 @@ function Login({ setUserData, closePopup }) {
                 closePopup();
                 console.log("User Data:", data);
             } else {
+
                 console.log("Failed to fetch user data");
             }
         }
@@ -48,6 +53,7 @@ function Login({ setUserData, closePopup }) {
 
     return (
         <div className="login-form">
+            <button className="close-btn" onClick={closePopup}>X</button>
             <h2>Login</h2>
             <form>
                 <input
@@ -66,6 +72,7 @@ function Login({ setUserData, closePopup }) {
                     placeholder="Password"
                     required
                 />
+                {error && <p className="error-message">{error}</p>}
                 <button type="submit" onClick={handleSubmit}>Login</button>
             </form>
         </div>

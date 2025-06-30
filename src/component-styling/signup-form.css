@@ -48,3 +48,20 @@
     background-color: #0367d2;
 }
 
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}

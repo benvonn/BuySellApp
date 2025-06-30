@@ -23,6 +23,7 @@ function Signupform({ setUserData }) {
             confirmPassword: ""
         });
         setError(null);
+
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +40,8 @@ function Signupform({ setUserData }) {
                 body: JSON.stringify(formData)
             });
             if (!response.ok) {
-                throw new Error("Signup failed");
+                const msg = await response.text();
+                throw new Error(msg || "Signup Failed.");
             }
             const data = await response.json();
             console.log("Signup successful:", data);
@@ -50,6 +52,7 @@ function Signupform({ setUserData }) {
     }
     return (
         <div className="signup-form">
+            <button className="close-btn" onClick={resetForm}>X</button>
             <h2>Sign Up</h2>
             <form>
                 <input
@@ -92,6 +95,7 @@ function Signupform({ setUserData }) {
                     onChange={handleChange}
                     style={{display: "none"}}
                 />
+                {error && <p className="error-message">{error}</p>}
                 <button type="submit" onClick={handleSubmit}>Sign Up</button>
             </form>
             </div>

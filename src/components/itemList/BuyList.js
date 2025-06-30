@@ -45,7 +45,7 @@ function BuyList() {
             {selectedItemId ? (
                 <ItemDetails itemId={selectedItemId} onBack={backBtn} />
             ) : (
-                <ul>
+                <ul style={{listStyleType: "none"}}>
                     {buyList
                         .filter(item => !isExpired(item))
                         .map((item, index) => (

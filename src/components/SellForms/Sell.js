@@ -17,6 +17,12 @@ function SellForm() {
             const user = JSON.parse(storedUser);
             setFormData(prev => ({ ...prev, userId: Number(user.id) }));
         }
+        if (successMsg) {
+            const timer = setTimeout(() => {
+                setSuccessMsg(null);
+            }, 3000); // Clear success message after 3 seconds
+            return () => clearTimeout(timer);
+        }
     }, []);
 
     const handleChange = (e) => {
